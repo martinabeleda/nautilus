@@ -12,3 +12,13 @@ See [Maelstrom](https://github.com/jepsen-io/maelstrom) docs.
 wget https://github.com/jepsen-io/maelstrom/releases/download/v0.2.3/maelstrom.tar.bz2
 tar zxf maelstrom.tar.bz2
 ```
+
+## Challenges
+
+### Echo
+
+Run node in maelstrom:
+
+```shell
+maelstrom test -w echo --bin target/debug/echo --node-count 1 --time-limit 10
+```
