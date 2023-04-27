@@ -43,8 +43,8 @@ fn main() -> anyhow::Result<()> {
         let reply = match request.body {
             Body::Init {
                 msg_id,
-                node_id,
-                node_ids,
+                node_id: _,
+                node_ids: _,
             } => Some(Message {
                 src: request.dest,
                 dest: request.src,
