@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use uuid::Uuid;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Message {
@@ -27,5 +28,13 @@ pub enum Body {
         msg_id: usize,
         in_reply_to: usize,
         echo: String,
+    },
+    Generate {
+        msg_id: usize,
+    },
+    GenerateOk {
+        msg_id: usize,
+        in_reply_to: usize,
+        id: Uuid,
     },
 }

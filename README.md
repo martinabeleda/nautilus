@@ -23,7 +23,24 @@ tar zxf maelstrom.tar.bz2
 Run node in maelstrom:
 
 ```shell
-maelstrom test -w echo --bin target/debug/echo --node-count 1 --time-limit 10
+maelstrom test -w echo \
+    --bin target/debug/echo \
+    --node-count 1 \
+    --time-limit 10
 ```
 
 Fingers crossed, you'll see: `Everything looks good! ヽ(‘ー`)ノ`
+
+### Unique ID generation
+
+Run node in maelstrom:
+
+```shell
+maelstrom test -w unique-ids \
+    --bin target/debug/guid \
+    --time-limit 30 \
+    --rate 1000 \
+    --node-count 3 \
+    --availability total \
+    --nemesis partition
+```

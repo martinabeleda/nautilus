@@ -9,8 +9,13 @@ edition = "2021"
 anyhow = "1.0.70"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
+uuid = { version = "1.3.2", features = ["v4", "serde"] }
 
 [[bin]]
 name = "echo"
 path = "src/bin/echo.rs"
+
+[[bin]]
+name = "guid"
+path = "src/bin/guid.rs"
 
