@@ -1,8 +1,23 @@
 use anyhow::Context;
+use serde::{Deserialize, Serialize};
 use std::io::{self, BufRead, Write};
 use uuid::Uuid;
 
-use nautilus::{Body, InitBody, Message};
+use nautilus::{InitBody, Message};
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(tag = "type")]
+#[serde(rename_all = "snake_case")]
+pub enum Body {
+    Generate {
+        msg_id: usize,
+    },
+    GenerateOk {
+        msg_id: usize,
+        in_reply_to: usize,
+        id: Uuid,
+    },
+}
 
 fn main() -> anyhow::Result<()> {
     let mut stdin = io::stdin().lock().lines();
@@ -38,8 +53,6 @@ fn main() -> anyhow::Result<()> {
         let request: Message<Body> = serde_json::from_str(&line).context("deserialize message")?;
 
         let body = match request.body {
-            Body::Echo { .. } => None,
-            Body::EchoOk { .. } => None,
             Body::Generate { msg_id } => Some(Body::GenerateOk {
                 msg_id: 1,
                 in_reply_to: msg_id,

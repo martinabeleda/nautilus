@@ -1,7 +1,23 @@
 use anyhow::Context;
+use serde::{Deserialize, Serialize};
 use std::io::{self, BufRead, Write};
 
-use nautilus::{Body, InitBody, Message};
+use nautilus::{InitBody, Message};
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(tag = "type")]
+#[serde(rename_all = "snake_case")]
+pub enum Body {
+    Echo {
+        msg_id: usize,
+        echo: String,
+    },
+    EchoOk {
+        msg_id: usize,
+        in_reply_to: usize,
+        echo: String,
+    },
+}
 
 fn main() -> anyhow::Result<()> {
     let mut stdin = io::stdin().lock().lines();
@@ -47,8 +63,6 @@ fn main() -> anyhow::Result<()> {
                 },
             }),
             Body::EchoOk { .. } => None,
-            Body::Generate { .. } => None,
-            Body::GenerateOk { .. } => None,
         };
 
         if let Some(reply) = reply {
