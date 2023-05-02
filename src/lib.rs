@@ -2,16 +2,16 @@ use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct Message {
+pub struct Message<B> {
     pub src: String,
     pub dest: String,
-    pub body: Body,
+    pub body: B,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(tag = "type")]
 #[serde(rename_all = "snake_case")]
-pub enum Body {
+pub enum InitBody {
     Init {
         msg_id: usize,
         node_id: String,
@@ -20,6 +20,12 @@ pub enum Body {
     InitOk {
         in_reply_to: usize,
     },
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(tag = "type")]
+#[serde(rename_all = "snake_case")]
+pub enum Body {
     Echo {
         msg_id: usize,
         echo: String,
